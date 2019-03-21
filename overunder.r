@@ -145,8 +145,33 @@
 + pinl[i]$underodd<-first(pin[matchId==pinl[i]$matchId & oddtype=="under"]$odd)
 + }
 > for(i in 1:length(b3l$matchId)){
-+ b3l[i]$overodd<-last(b3[matchId==b3l[i]$matchId & oddtype=="over"]$odd)
-+ b3l[i]$underodd<-last(b3[matchId==b3l[i]$matchId & oddtype=="under"]$odd)}
++ b3l[i]$overodd<-first(b3[matchId==b3l[i]$matchId & oddtype=="over"]$odd)
++ b3l[i]$underodd<-first(b3[matchId==b3l[i]$matchId & oddtype=="under"]$odd)}
+> 
+> pinl[,overp:=1/overodd]
+> pinl[,underp:=1/underodd]
+> pinl[,totalp:=overodd+underodd]
+> pinl[,overpn:=overp/totalp]
+> pinl[,underpn:=underp/totalp]
+> 
+> b3l[,overp:=1/overodd]
+> b3l[,underp:=1/underodd]
+> b3l[,totalp:=overodd+underodd]
+> b3l[,overpn:=overp/totalp]
+> b3l[,underpn:=underp/totalp]
+> 
+> bfl[,overp:=1/overodd]
+> bfl[,underp:=1/underodd]
+> bfl[,totalp:=overodd+underodd]
+> bfl[,overpn:=overp/totalp]
+> bfl[,underpn:=underp/totalp]
+> 
+> bfxl[,overp:=1/overodd]
+> bfxl[,underp:=1/underodd]
+> bfxl[,totalp:=overodd+underodd]
+> bfxl[,overpn:=overp/totalp]
+> bfxl[,underpn:=underp/totalp]
+> 
 > pinl
        matchId overodd underodd     overp    underp   totalp    overpn
    1: 004f4ING    2.14     1.80 0.4672897 0.5555556 1.022845 0.4568528
@@ -172,31 +197,6 @@
 2926: 0.6322115
 2927: 0.4368687
 2928: 0.4139651
-> b3l
-       matchId overodd underodd     overp    underp   totalp    overpn
-   1: 004f4ING    2.00     1.80 0.5000000 0.5555556 1.055556 0.4736842
-   2: 02oVDuv1    2.14     1.66 0.4672897 0.6024096 1.069699 0.4368421
-   3: 04PCiQzK    2.00     1.80 0.5000000 0.5555556 1.055556 0.4736842
-   4: 04vrPwsg    2.40     1.53 0.4166667 0.6535948 1.070261 0.3893130
-   5: 04zko0D5    1.47     2.60 0.6802721 0.3846154 1.064887 0.6388206
-  ---                                                                 
-3094: zXtioUye    1.83     1.98 0.5464481 0.5050505 1.051499 0.5196850
-3095: zXweIXVE    2.25     1.63 0.4444444 0.6134969 1.057941 0.4201031
-3096: zy3x0uCs    1.53     2.40 0.6535948 0.4166667 1.070261 0.6106870
-3097: zylytbNg    1.70     2.10 0.5882353 0.4761905 1.064426 0.5526316
-3098: zZ6f59Ue    1.70     2.10 0.5882353 0.4761905 1.064426 0.5526316
-        underpn
-   1: 0.5263158
-   2: 0.5631579
-   3: 0.5263158
-   4: 0.6106870
-   5: 0.3611794
-  ---          
-3094: 0.4803150
-3095: 0.5798969
-3096: 0.3893130
-3097: 0.4473684
-3098: 0.4473684
 > bfl
        matchId overodd underodd     overp    underp   totalp    overpn
    1: 02oVDuv1    2.10     1.80 0.4761905 0.5555556 1.031746 0.4615385
