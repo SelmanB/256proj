@@ -1,0 +1,222 @@
+install.packages('data.table')
+require(data.table)
+library(data.table)
+setwd('/Users/kadir/Downloads/')
+odds=readRDS('df9b1196-e3cf-4cc7-9159-f236fe738215_odd_details.rds')
+intervals<-(0:10)
+intervals<-intervals*86400*365.25
+intervals<-intervals+1246406400
+seasons<-cut(odds$date,breaks=intervals,labels=2010:2019)
+odds$season<-seasons
+btmatches<-sort(unique(odds[bookmaker=="Betsson"]$matchId))
+ bt1<-rep(0,length(btmatches)) 
+ bt2<-rep(0,length(btmatches)) 
+ btx<-rep(0,length(btmatches)) 
+
+for(i in 1:length(btmatches)){ 
+ bt1[i]<-last(odds[matchId==btmatches[i] &  bookmaker=="Betsson"  &  oddtype=="odd1"]$odd) 
+    bt2[i]<-last(odds[matchId==btmatches[i] &  bookmaker=="Betsson"  &  oddtype=="odd2"]$odd) 
+    btx[i]<-last(odds[matchId==btmatches[i] &  bookmaker=="Betsson"  &  oddtype=="oddX"]$odd)} 
+ btseason<-rep(0,length(btmatches))
+
+ for(i in 1:length(btmatches)){ 
+    btseason[i]=last(odds[matchId==btmatches[i]]$season)}
+
+ bthome=1/bt1
+ btaway=1/bt2
+ btdraw=1/btx
+betssontable<-data.table(matchId=btmatches,odd1=bt1,odd2=bt2,oddx=btx,ph=bthome,pa=btaway,pd=btdraw,season=btseason)
+
+ pinmatches<-sort(unique(odds[bookmaker=="Pinnacle"]$matchId)) 
+
+
+ b365matches<-sort(unique(odds[bookmaker=="bet365"]$matchId)) 
+ bwmatches<-sort(unique(odds[bookmaker=="bwin"]$matchId))
+ pin1<-rep(0,length(pinmatches)) 
+ pin2<-rep(0,length(pinmatches)) 
+ pinx<-rep(0,length(pinmatches)) 
+ b3651<-rep(0,length(b365matches)) 
+ b3652<-rep(0,length(b365matches)) 
+ b365x<-rep(0,length(b365matches)) 
+ bw1<-rep(0,length(bwmatches)) 
+ bw2<-rep(0,length(bwmatches)) 
+ bwx<-rep(0,length(bwmatches))
+ for(i in 1:length(pinmatches)){ 
+    pin1[i]<-last(odds[matchId==pinmatches[i] &  bookmaker=="Pinnacle"  &  oddtype=="odd1"]$odd) 
+   pin2[i]<-last(odds[matchId==pinmatches[i] &  bookmaker=="Pinnacle"  &  oddtype=="odd2"]$odd) 
+    pinx[i]<-last(odds[matchId==pinmatches[i] &  bookmaker=="Pinnacle"  &  oddtype=="oddX"]$odd)} 
+for(i in 1:length(b365matches)){ 
+     b3651[i]<-last(odds[matchId==b365matches[i] &  bookmaker=="bet365"  &  oddtype=="odd1"]$odd) 
+
+
+     b3652[i]<-last(odds[matchId==b365matches[i] &  bookmaker=="bet365"  &  oddtype=="odd2"]$odd) 
+    b365x[i]<-last(odds[matchId==b365matches[i] &  bookmaker=="bet365"  &  oddtype=="oddX"]$odd)} 
+ for(i in 1:length(bwmatches)){ 
+     bw1[i]<-last(odds[matchId==bwmatches[i] &  bookmaker=="bwin"  &  oddtype=="odd1"]$odd) 
+     bw2[i]<-last(odds[matchId==bwmatches[i] &  bookmaker=="bwin"  &  oddtype=="odd2"]$odd) 
+    bwx[i]<-last(odds[matchId==bwmatches[i] &  bookmaker=="bwin"  &  oddtype=="oddX"]$odd)}
+ pinseason<-rep(0,length(pinmatches))
+ b365season<-rep(0,length(b365matches))
+  bwseason<-rep(0,length(bwmatches))
+
+ for(i in 1:length(pinmatches)){ 
+     pinseason[i]=last(odds[matchId==pinmatches[i]]$season)}
+ for(i in 1:length(b365matches)){ 
+     b365season[i]=last(odds[matchId==b365matches[i]]$season)}
+ for(i in 1:length(bwmatches)){ 
+    bwseason[i]=last(odds[matchId==bwmatches[i]]$season)}
+
+ pinhome=1/pin1
+ pinaway=1/pin2
+ pindraw=1/pinx
+ b365home=1/b3651
+ b365away=1/b3652
+ b365draw=1/b365x
+ bwhome=1/bw1
+ bwaway=1/bw2
+ bwdraw=1/bwx
+ pinnacletable<-data.table(matchId=pinmatches,odd1=pin1,odd2=pin2,oddx=pinx,ph=pinhome,pa=pinaway,pd=pindraw,season=pinseason) 
+ bet365table<-data.table(matchId=b365matches,odd1=b3651,odd2=b3652,oddx=b365x, ph=b365home,pa=b365away,pd=b365draw ,season=b365season) 
+ bwintable<-data.table(matchId=bwmatches, odd1=bw1,odd2=bw2,oddx=bwx, ph=bwhome,pa=bwaway,pd=bwdraw ,season=bwseason)
+unmatches<-sort(unique(odds[bookmaker=="Unibet"]$matchId))
+ un1<-rep(0,length(unmatches)) 
+ un2<-rep(0,length(unmatches)) 
+ unx<-rep(0,length(unmatches)) 
+for(i in 1:length(unmatches)){ 
+     un1[i]<-last(odds[matchId==unmatches[i] &  bookmaker=="Unibet"  &  oddtype=="odd1"]$odd) 
+    un2[i]<-last(odds[matchId==unmatches[i] &  bookmaker=="Unibet"  &  oddtype=="odd2"]$odd) 
+    unx[i]<-last(odds[matchId==unmatches[i] &  bookmaker=="Unibet"  &  oddtype=="oddX"]$odd)} 
+ unseason<-rep(0,length(btmatches))
+
+ for(i in 1:length(unmatches)){ 
+     unseason[i]=last(odds[matchId==unmatches[i]]$season)}
+
+ unhome=1/un1
+  unaway=1/un2
+  undraw=1/unx
+  unibettable<-data.table(matchId=unmatches,odd1=un1,odd2=un2,oddx=unx,ph=unhome,pa=unaway,pd=undraw,season=unseason)
+  pinnacletable.2010=pinnacletable[season=="2"]  
+pinnacletable.2016=pinnacletable[season=="8"]  
+
+bwintable.2010=bwintable[season=="2"]  
+bwintable.2016=bwintable[season=="8"]  
+bet365table.2010=bet365table[season=="2"]  
+bet365table.2016=bet365table[season=="8"]
+betssontable.2010=betssontable[season=="2"]  
+betssontable.2016=betssontable[season=="8"]
+ unibettable.2010=unibettable[season=="2"]  
+ unibettable.2016=unibettable[season=="8"]
+unibettable.2010$diff<-unibettable.2010$ph-unibettable.2010$pa
+unibettable.2016$diff<-unibettable.2016$ph-unibettable.2016$pa
+ mean(unibettable.2010$diff)
+[1] 0.1783829
+
+ varuni.2010<- var(unibettable.2010$diff)/386
+ 
+ mean(unibettable.2016$diff)
+[1] 0.1375151
+ 
+ varuni.2016<- var(unibettable.2016$diff)/369
+ 
+ mean<-mean(unibettable.2010$diff)-mean(unibettable.2016$diff)
+ var<- varuni.2010+ varuni.2016
+ pnorm((0-mean)/sqrt(var))
+[1] 0.06799145
+ mean
+[1] 0.04086776
+ 
+ var
+[1] 0.00075137
+ 
+ betssontable.2010$diff<-betssontable.2010$ph-betssontable.2010$pa
+betssontable.2016$diff<-betssontable.2016$ph-betssontable.2016$pa
+ mean(betssontable.2010$diff)
+[1] 0.1819118
+ 
+ varbets.2010<- var(betssontable.2010$diff)/387
+ 
+ mean(betssontable.2016$diff)
+[1] 0.1365895
+ 
+ varbets.2016<- var(betssontable.2016$diff)/369
+ 
+ mean<-mean(betssontable.2010$diff)-mean(betssontable.2016$diff)
+ var<- varbets.2010+varbets.2016
+ pnorm((0-mean)/sqrt(var))
+[1] 0.04946789
+ 
+ mean
+[1] 0.04532227
+ 
+ var
+[1] 0.0007544614
+ 
+ bet365table.2010$diff<-bet365table.2010$ph-bet365table.2010$pa
+ bet365table.2016$diff<-bet365table.2016$ph-bet365table.2016$pa
+ mean(bet365table.2010$diff)
+[1] 0.1812718
+ 
+ varb365.2010<- var(bet365table.2010$diff)/387
+ 
+ mean(bet365table.2016$diff)
+[1] 0.13837
+ 
+ varb365.2016<-var(bet365table.2016$diff)/369
+ 
+ mean<-mean(bet365table.2010$diff)-mean(bet365table.2016$diff)
+ var<-varb365.2010+varb365.2016
+ pnorm((0-mean)/sqrt(var))
+[1] 0.06061195
+ 
+ mean
+[1] 0.04290189
+ 
+ var
+[1] 0.0007664462
+
+pinnacletable.2010$diff<-pinnacletable.2010$ph-pinnacletable.2010$pa
+ pinnacletable.2016$diff<-pinnacletable.2016$ph-pinnacletable.2016$pa
+ mean(pinnacletable.2010$diff)
+[1] 0.1828206
+ 
+ varpin.2010<- var(pinnacletable.2010$diff)/386
+ 
+ mean(pinnacletable.2016$diff)
+[1] 0.137684
+ 
+ varpin.2016 <- var(pinnacletable.2016$diff)/369
+ 
+ mean<-mean(pinnacletable.2010$diff)-mean(pinnacletable.2016$diff)
+ var<-varpin.2010+varpin.2016
+ pnorm((0-mean)/sqrt(var))
+[1] 0.05055984
+ 
+ 
+ mean
+[1] 0.04513661
+
+ var
+[1] 0.0007579869
+ 
+ bwintable.2010$diff<-bwintable.2010$ph-bwintable.2010$pa
+bwintable.2016$diff<-bwintable.2016$ph-bwintable.2016$pa
+ mean(bwintable.2010$diff)
+[1] 0.1795943
+ 
+varbw.2010<-var(bwintable.2010$diff)/387
+ 
+ mean(bwintable.2016$diff)
+[1] 0.1395759
+ 
+ varbw.2016<-var(bwintable.2016$diff)/369
+ 
+ mean<-mean(bwintable.2010$diff)-mean(bwintable.2016$diff)
+ var<-varbw.2010+varbw.2016
+ pnorm((0-mean)/sqrt(var))
+[1] 0.07557425
+ 
+ mean
+[1] 0.0400184
+ 
+ var
+[1] 0.0007771794
