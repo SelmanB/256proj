@@ -1,0 +1,53 @@
+model<-lm(goals~homehomeavg+homehomevar+homeawayavg+
++ homeawayvar+awayhomeavg+awayhomevar+awayawayavg+awayawayvar+z0.5
++ +z1.5+z2.5+z3.5+z4.5+z5.5,matches[191:3000])
+> model
+
+Call:
+lm(formula = goals ~ homehomeavg + homehomevar + homeawayavg + 
+    homeawayvar + awayhomeavg + awayhomevar + awayawayavg + awayawayvar + 
+    z0.5 + z1.5 + z2.5 + z3.5 + z4.5 + z5.5, data = matches[191:3000])
+
+Coefficients:
+(Intercept)  homehomeavg  homehomevar  homeawayavg  homeawayvar  awayhomeavg  
+    9.15472      0.53238     -0.01790     -0.65434      0.10031     -0.57307  
+awayhomevar  awayawayavg  awayawayvar         z0.5         z1.5         z2.5  
+    0.10127      0.72982      0.05483     -0.42473      1.75912    -12.11269  
+       z3.5         z4.5         z5.5  
+   10.34095      2.26845     -0.34515  
+
+> summary(model)
+
+Call:
+lm(formula = goals ~ homehomeavg + homehomevar + homeawayavg + 
+    homeawayvar + awayhomeavg + awayhomevar + awayawayavg + awayawayvar + 
+    z0.5 + z1.5 + z2.5 + z3.5 + z4.5 + z5.5, data = matches[191:3000])
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.4301 -1.1842 -0.1131  1.0893  7.0389 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)   
+(Intercept)   9.15472    3.53411   2.590  0.00964 **
+homehomeavg   0.53238    0.23926   2.225  0.02615 * 
+homehomevar  -0.01790    0.15430  -0.116  0.90765   
+homeawayavg  -0.65434    0.32161  -2.035  0.04199 * 
+homeawayvar   0.10031    0.20194   0.497  0.61943   
+awayhomeavg  -0.57307    0.23779  -2.410  0.01602 * 
+awayhomevar   0.10127    0.15602   0.649  0.51632   
+awayawayavg   0.72982    0.32045   2.277  0.02284 * 
+awayawayvar   0.05483    0.20126   0.272  0.78532   
+z0.5         -0.42473    1.60251  -0.265  0.79100   
+z1.5          1.75912    4.03976   0.435  0.66327   
+z2.5        -12.11269    4.62857  -2.617  0.00892 **
+z3.5         10.34095    4.43415   2.332  0.01977 * 
+z4.5          2.26845    3.06652   0.740  0.45951   
+z5.5         -0.34515    1.22696  -0.281  0.77849   
+---
+Signif. codes:  0 â€˜***â€™ 0.001 â€˜**â€™ 0.01 â€˜*â€™ 0.05 â€˜.â€™ 0.1 â€˜ â€™ 1
+
+Residual standard error: 1.653 on 2777 degrees of freedom
+  (18 observations deleted due to missingness)
+Multiple R-squared:  0.04691,	Adjusted R-squared:  0.04211 
+F-statistic: 9.763 on 14 and 2777 DF,  p-value: < 2.2e-16
