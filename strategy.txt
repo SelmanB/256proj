@@ -1,0 +1,10 @@
+Fot the betting strategy, we know that betting over if our predicted value is over 2.5 and under if otherwise is not a godd strategy.
+We should bet for a value if and only if information we have is more than what is implied by the odd itself. We can test if it is by
+comparing the probability distributions implied by odd and out prediction. We do this by assuming our predicted number of goals implies
+a normal probability distribution centered around the predicted value with the variance equal to either the sse of our model or the variance
+we previously determined to be implied by the relationship between the z-values of odd probabilities for different handicaps. We believe
+the former is more reasonable. We compare the distribution inferred by our prediction and implied by the odds by comparing the 
+probabilities of over or under 2.5 goals. Additional advantage of this approach is that we can choose not to bet at all when we don't 
+normalize the probabilites calculated from the odds. When we don't have enough extra information to beat the bookmaker we will see that
+both over and under probability values (1/odd case) by the bookmaker will be higher than what we predict. We can only bet for one
+option when the probability from bookmaker is less than what we calculate.
