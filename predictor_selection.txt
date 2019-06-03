@@ -1,0 +1,35 @@
+We want to predict the total number of goals scored during the match.
+We thought it depends on the performances or playing styles of the teams involved,
+so decided that some variables that may be relevant are the average number of goals home/away has scored as home/away. 
+We extracted this data together with their variances and 
+values for other team involved as well (e.g. average goals when away for home team), 
+in order not to lose any data, in case they may be useful as well.
+Of course, we calculated these metrics for the teams for only a fraction of the played matches(first 3000),
+as these will be our training data. Actually, we may want to incorporate the variances in the model as well;
+as their expectation is visibly the same as the average, some teams have lower or higher values. Our linear
+model may subtract the variance multiplied by a factor from the average ant therefore decrease the impact of
+the indicators with a higher variance, but we will analyze how significant this effect may be. 
+
+
+Later, we thought the odds for the given matches may be direct indicators for probability distribution
+of the total number of goals, so we analyzed that data as well. We found, however, that
+there are many handicap types most of which are only seldom used. So we counted their frequencies and
+determined which handicaps are the most essential and unsurprisingly found them to be (0:5)+0.5.
+
+
+Then we Put these 20 numbers together for every match in a data table. But it needed further processing,
+as we didn't have any odd data for first 190 matches and an over/under odd cannot be a linear indicator of
+the expected number of matches. We would better transform the bet into another variable that may give a linear
+relationship. Transforming it into the implied probability is a good starting point, but we still can't expect
+the implication on outcome to be a linear relationship. What it tells about the expectation is that if we assume
+a gaussian curve centered at the expectation the area of the curve on the left and right of the given value will be
+the probabilites calculated from the odds. So if we calculate the z-value for these probabilites, we would find
+what the odds actually imly about the expected number of goals: number of std-devs the expectation is above/below
+this handicap. The fact that it does not give hints about the value of std-dev complicates things, but assuming it
+is about the same for different handicaps suggests its expectation is also a linear function of the z-values we found.
+Even if it is not precisely included in the model, it seems better than other -linear- alternatives.
+Therefore we may expect a linear model of these z-values to be able to give a reasonable estimate.
+
+While doing this processing we realized something amazing. The standard deviation for goal number estimate from the odds
+was almost constant for all matches! So our linear model with z values without standard deviation may be very successful.
+We demonstrated this in the same file we calculated z-values (z-analysis.r). 
